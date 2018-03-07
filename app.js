@@ -89,13 +89,13 @@ client.on('message', message => {
 					message.author.send("Please do so within 24 hours. After it has been submitted, your application will be reviewed by officers.");
 					message.author.send("With that, here are the questions:\n" + 
 						"1). What is your character's name?\n" + 
-						"2). Why would you like to join Enrage?\n" +
+						"2). Why would you like to join Enrage, and what do you expect from us?\n" +
 						"3). Please tell us a little bit about yourself.");
 					if (lowerCasedMessage.indexOf('-raider') > -1) {
 						message.author.send("4). Please describe your previous, and current raiding history.\n" + 
 							"5). Please link us to your FFlogs character page.\n" + 
 							"6). What jobs do you main, and what else are you able to play in raid?\n" + 
-							"7). Have you had any other raiding experience prior to FFXIV?\n" + 
+							"7). What has been your favourite fight to date in FFXIV, and why?\n" + 
 							"8). What are your goals as a raider in FFXIV, and ambition?\n" + 
 							"9). Do you have any references or people you know within Enrage? If so, who?\n");
 					}
