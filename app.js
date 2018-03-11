@@ -52,11 +52,13 @@ client.on('guildMemberAdd', member => {
 		entrancehall.send('Greetings, ' + member.user.toString() + '. Welcome to the Enrage discord. How may I help you today?\n\n' +
 			'**If you’d like to only join the Discord server and not the free company**, please enter ' +
 			'“-Guest” (without quotation marks). This will let you have access to more text/voice channels.\n\n' +
-			'**If you’d like to join the free company**, please enter 1 of the 2 listed commands below ' +
-			'(without quotation marks), and I will help you get started on your application by sending ' +
-			'you a DM specifying the criteria. Please read it carefully.\n\n' +
-			'Enter “-Raider” if you’d like to join as a raider.\n' +
-			'Enter “-Social” if you’d like to join as a social member.');
+			// '**If you’d like to join the free company**, please enter 1 of the 2 listed commands below ' +
+			// '(without quotation marks), and I will help you get started on your application by sending ' +
+			// 'you a DM specifying the criteria. Please read it carefully.\n\n' +
+			// 'Enter “-Raider” if you’d like to join as a raider.\n' +
+			// 'Enter “-Social” if you’d like to join as a social member.');
+			'Recruitment for the free company is currently closed. We only accept very exceptional cases at the moment, so please contact ' +
+			'an officer if you believe you fit this criterion.'
 	}, 2000);
 });
 
@@ -67,54 +69,55 @@ client.on('message', message => {
 	lowerCasedMessage = message.content.toLowerCase();
 	applicantName = message.author.username.replace(/\s+/g, '-').replace(/[^\x00-\x7F]/g, '').replace(/\W/g, '').toLowerCase();
 	if (message.channel.name === 'entrance-hall') {
-		if ((['-raider', '-social'].indexOf(lowerCasedMessage) > -1) && !applicants[applicantName]) {
-			applicants[applicantName] = true;
-			message.guild.createChannel(applicantName, 'text')
-				.then(function (channel) {
-					channel.overwritePermissions(message.author, {
-						READ_MESSAGES: true,
-						SEND_MESSAGES: true
-					});
-					channel.overwritePermissions(everyone, {
-						READ_MESSAGES: false,
-						SEND_MESSAGES: false
-					});
-					channel.overwritePermissions(officer, {
-						READ_MESSAGES: true,
-						SEND_MESSAGES: true
-					});
-					message.author.send("Here's the application for you to fill out. Please answers these questions to the best of your knowledge.\n" + 
-						"Once you have completed all the questions, **please copy/paste the questions and answers into the created text channel named " + 
-						"after you in the Enrage Discord.**");
-					message.author.send("Please do so within 24 hours. After it has been submitted, your application will be reviewed by officers.");
-					message.author.send("With that, here are the questions:\n" + 
-						"1). What is your character's name?\n" + 
-						"2). Why would you like to join Enrage, and what do you expect from us?\n" +
-						"3). Please tell us a little bit about yourself.");
-					if (lowerCasedMessage.indexOf('-raider') > -1) {
-						message.author.send("4). Please describe your previous, and current raiding history.\n" + 
-							"5). Please link us to your FFlogs character page.\n" + 
-							"6). What jobs do you main, and what else are you able to play in raid?\n" + 
-							"7). What has been your favourite fight to date in FFXIV, and why?\n" + 
-							"8). What are your goals as a raider in FFXIV, and ambition?\n" + 
-							"9). Do you have any references or people you know within Enrage? If so, who?\n");
-					}
-					if (lowerCasedMessage.indexOf('-social') > -1) {
-						message.author.send("4). What else do you enjoy doing in-game?\n" +
-							"5). Do you have any references within Enrage? If so, who?\n" + 
-							"6). Tell us a good joke.\n" + 
-							"7). What kind of tree would you be, and why?\n");
-					}
-					message.author.send("**Please copy/paste the questions and answers into the created text channel named after you in the Enrage Discord.**");
-					message.channel.send("Very good. I have sent the application instructions directly to you. Please check your DMs.\n" + 
-						"I have also added the Guest tag to you. Please feel free to browse the channels at your own leisure. We hope your stay is most comfortable.")
-						.then(function () {
-							message.member.addRole(guest);
-						});
-				});
-		} else if ((['-raider', '-social'].indexOf(lowerCasedMessage) > -1) && applicants[applicantName]) {
-			message.channel.send("You already have an application in place.");
-		} else if (lowerCasedMessage.indexOf('-guest') > -1) {
+		// if ((['-raider', '-social'].indexOf(lowerCasedMessage) > -1) && !applicants[applicantName]) {
+		// 	applicants[applicantName] = true;
+		// 	message.guild.createChannel(applicantName, 'text')
+		// 		.then(function (channel) {
+		// 			channel.overwritePermissions(message.author, {
+		// 				READ_MESSAGES: true,
+		// 				SEND_MESSAGES: true
+		// 			});
+		// 			channel.overwritePermissions(everyone, {
+		// 				READ_MESSAGES: false,
+		// 				SEND_MESSAGES: false
+		// 			});
+		// 			channel.overwritePermissions(officer, {
+		// 				READ_MESSAGES: true,
+		// 				SEND_MESSAGES: true
+		// 			});
+		// 			message.author.send("Here's the application for you to fill out. Please answers these questions to the best of your knowledge.\n" + 
+		// 				"Once you have completed all the questions, **please copy/paste the questions and answers into the created text channel named " + 
+		// 				"after you in the Enrage Discord.**");
+		// 			message.author.send("Please do so within 24 hours. After it has been submitted, your application will be reviewed by officers.");
+		// 			message.author.send("With that, here are the questions:\n" + 
+		// 				"1). What is your character's name?\n" + 
+		// 				"2). Why would you like to join Enrage, and what do you expect from us?\n" +
+		// 				"3). Please tell us a little bit about yourself.");
+		// 			if (lowerCasedMessage.indexOf('-raider') > -1) {
+		// 				message.author.send("4). Please describe your previous, and current raiding history.\n" + 
+		// 					"5). Please link us to your FFlogs character page.\n" + 
+		// 					"6). What jobs do you main, and what else are you able to play in raid?\n" + 
+		// 					"7). What has been your favourite fight to date in FFXIV, and why?\n" + 
+		// 					"8). What are your goals as a raider in FFXIV, and ambition?\n" + 
+		// 					"9). Do you have any references or people you know within Enrage? If so, who?\n");
+		// 			}
+		// 			if (lowerCasedMessage.indexOf('-social') > -1) {
+		// 				message.author.send("4). What else do you enjoy doing in-game?\n" +
+		// 					"5). Do you have any references within Enrage? If so, who?\n" + 
+		// 					"6). Tell us a good joke.\n" + 
+		// 					"7). What kind of tree would you be, and why?\n");
+		// 			}
+		// 			message.author.send("**Please copy/paste the questions and answers into the created text channel named after you in the Enrage Discord.**");
+		// 			message.channel.send("Very good. I have sent the application instructions directly to you. Please check your DMs.\n" + 
+		// 				"I have also added the Guest tag to you. Please feel free to browse the channels at your own leisure. We hope your stay is most comfortable.")
+		// 				.then(function () {
+		// 					message.member.addRole(guest);
+		// 				});
+		// 		});
+		// } else if ((['-raider', '-social'].indexOf(lowerCasedMessage) > -1) && applicants[applicantName]) {
+		// 	message.channel.send("You already have an application in place.");
+		// } else 
+		if (lowerCasedMessage.indexOf('-guest') > -1) {
 			message.channel.send("Very good. We hope your stay is most comfortable.")
 				.then(function () {
 					message.member.addRole(guest);
