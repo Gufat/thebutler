@@ -15,7 +15,11 @@ applicants = {},
 entrancehall,
 messagesToDelete,
 lowerCasedMessage,
-applicantName;
+applicantName,
+divebombEmoji,
+divebombCounter = 0,
+divebombee,
+deadMessage;
 
 client.on('ready', () => {
 	console.log('I am ready!');
@@ -45,6 +49,9 @@ client.on('ready', () => {
 
 	// members
 	members = guild.members;
+
+	// emojis
+	divebombEmoji = client.emojis.find("name", "divebomb");
 });
 
 client.on('guildMemberAdd', member => {
@@ -58,7 +65,7 @@ client.on('guildMemberAdd', member => {
 			// 'Enter “-Raider” if you’d like to join as a raider.\n' +
 			// 'Enter “-Social” if you’d like to join as a social member.');
 			'Recruitment for the free company is currently closed. We only accept very exceptional cases at the moment, so please contact ' +
-			'an officer if you believe you fit this criterion.'
+			'an officer if you believe you fit this criterion.');
 	}, 2000);
 });
 
@@ -269,6 +276,25 @@ client.on('message', message => {
 				});
 			}
 		}
+	}
+
+	// divebomb game
+	divebombCounter++;
+	if (divebombCounter === 100) {
+		divebombee = message.author.username;
+		message.channel.send(message.author.toString() + "\n " + divebombEmoji.toString() + " \n" +
+			"**DOOOOOODDDGGGGGEEEEEEE** (type -dodge)");
+		deadMessage = setTimeout(function () {
+			divebombee = null;
+			divebombCounter = 0;
+			message.channel.send(message.author.toString() + ", you are dead. May I recommend a nice casket for your funeral that no one will attend?");
+		}, 3000);
+	}
+	if ((lowerCasedMessage.indexOf('-dodge') > -1) && (divebombee === message.author.username)) {
+		divebombee = null;
+		divebombCounter = 0;
+		clearTimeout(deadMessage);
+		message.channel.send("Congratulations, " + message.author.toString() + ". You are better than 99% of FF14's raiders.");
 	}
 });
 
