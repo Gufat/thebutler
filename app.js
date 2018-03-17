@@ -19,7 +19,12 @@ applicantName,
 divebombEmoji,
 divebombCounter = 0,
 divebombee,
-deadMessage;
+deadMessage,
+stackCounter = 0,
+stackedCounter = 0,
+stackCountee = [],
+stackCountee2 = [],
+deadMessage2;
 
 client.on('ready', () => {
 	console.log('I am ready!');
@@ -282,19 +287,69 @@ client.on('message', message => {
 	divebombCounter++;
 	if (divebombCounter === 100) {
 		divebombee = message.author.username;
-		message.channel.send(message.author.toString() + "\n " + divebombEmoji.toString() + " \n" +
-			"**DOOOOOODDDGGGGGEEEEEEE** (type -dodge)");
+		message.channel.send(message.author.toString() + ", ***DOOOOOODDDGGGGGEEEEEEE*** (type -d)", {
+			embed: {
+				thumbnail: {
+					url: 'https://cdn.discordapp.com/emojis/424249692919037954.png?v=1'
+				}
+			}
+		});
 		deadMessage = setTimeout(function () {
 			divebombee = null;
 			divebombCounter = 0;
 			message.channel.send(message.author.toString() + ", you are dead. May I recommend a nice casket for your funeral that no one will attend?");
 		}, 3000);
 	}
-	if ((lowerCasedMessage.indexOf('-dodge') > -1) && (divebombee === message.author.username)) {
+	if ((lowerCasedMessage.indexOf('-d') > -1) && (divebombee === message.author.username)) {
 		divebombee = null;
 		divebombCounter = 0;
 		clearTimeout(deadMessage);
 		message.channel.send("Congratulations, " + message.author.toString() + ". You are better than 99% of FF14's raiders.");
+	}
+
+	// stack game
+	stackCounter++;
+	if (stackCounter === 210) {
+		message.channel.fetchMessages()
+		.then(messages => {
+			messages.some(function (message) {
+				if (stackCountee.indexOf(message.author.toString()) === -1 && !message.author.bot) {
+					stackCountee.push(message.author.toString());
+					stackCountee2.push(message.author.toString());
+					return stackCountee.length === 3;
+				}
+			});
+			message.channel.send(stackCountee[0] + ", " + stackCountee[1] + ", " + stackCountee[2] + ", ***STAAAAAAACCCCKKKKKKKKKK*** (type -s)");
+			deadMessage2 = setTimeout(function () {
+				stackCounter = 0;
+				stackedCounter = 0;
+				if (stackCountee.length === 3) {
+					message.channel.send(stackCountee[0] + ", " + stackCountee[1] + ", " + stackCountee[2] + ", you all wiped the raid. Please use your eyeballs next time.");
+				}
+				if (stackCountee.length === 2) {
+					message.channel.send(stackCountee[0] + ", " + stackCountee[1] + ", you both wiped the raid. Please use your eyeballs next time.");
+				}
+				if (stackCountee.length === 1) {
+					message.channel.send(stackCountee[0] + ", you wiped the raid. Please kindly remove yourself from the group.");
+				}
+				stackCountee = [];
+				stackCountee2 = [];
+			}, 5000);
+		}).catch(err => {
+			console.log(err);
+		});
+	}
+	if ((lowerCasedMessage.indexOf('-s') > -1) && (stackCountee.indexOf(message.author.toString()) > -1)) {
+		stackedCounter++;
+		stackCountee.splice(stackCountee.indexOf(message.author.toString()), 1);
+		if (stackedCounter === 3) {
+			stackCounter = 0;
+			stackedCounter = 0;
+			clearTimeout(deadMessage2);
+			message.channel.send("Congratulations, " + stackCountee2[0] + ", " + stackCountee2[1] + ", " + stackCountee2[2] + ". You are better than 99% of FF14's raiders.");
+			stackCountee = [];
+			stackCountee2 = [];
+		}
 	}
 });
 
