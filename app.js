@@ -285,7 +285,7 @@ client.on('message', message => {
 
 	// divebomb game
 	divebombCounter++;
-	if (divebombCounter === 5) {
+	if (divebombCounter === 100) {
 		divebombee = message.author.username;
 		message.channel.send(message.author.toString() + ", ***DOOOOOODDDGGGGGEEEEEEE*** (type -d)", {
 			embed: {
@@ -315,7 +315,7 @@ client.on('message', message => {
 
 	// stack game
 	stackCounter++;
-	if (stackCounter === 5) {
+	if (stackCounter === 220) {
 		message.channel.fetchMessages()
 		.then(messages => {
 			messages.some(function (message) {
