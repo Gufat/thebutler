@@ -285,7 +285,7 @@ client.on('message', message => {
 
 	// divebomb game
 	divebombCounter++;
-	if (divebombCounter === 100) {
+	if (divebombCounter === 5) {
 		divebombee = message.author.username;
 		message.channel.send(message.author.toString() + ", ***DOOOOOODDDGGGGGEEEEEEE*** (type -d)", {
 			embed: {
@@ -304,12 +304,18 @@ client.on('message', message => {
 		divebombee = null;
 		divebombCounter = 0;
 		clearTimeout(deadMessage);
-		message.channel.send("Congratulations, " + message.author.toString() + ". You are better than 99% of FF14's raiders.");
+		message.channel.send("Congratulations, THE " + message.author.toString() + " of FFLogs. You're a superstar.", {
+			embed: {
+				thumbnail: {
+					url: 'https://cdn.discordapp.com/attachments/418226278722699275/424431785271885834/chrome_2018-03-17_00-00-00.jpg'
+				}
+			}
+		});
 	}
 
 	// stack game
 	stackCounter++;
-	if (stackCounter === 210) {
+	if (stackCounter === 5) {
 		message.channel.fetchMessages()
 		.then(messages => {
 			messages.some(function (message) {
@@ -346,7 +352,13 @@ client.on('message', message => {
 			stackCounter = 0;
 			stackedCounter = 0;
 			clearTimeout(deadMessage2);
-			message.channel.send("Congratulations, " + stackCountee2[0] + ", " + stackCountee2[1] + ", " + stackCountee2[2] + ". You are better than 99% of FF14's raiders.");
+			message.channel.send("Congratulations, THE " + stackCountee2[0] + ", " + stackCountee2[1] + ", " + stackCountee2[2] + " of FFLogs. You're all superstars.", {
+				embed: {
+					thumbnail: {
+						url: 'https://cdn.discordapp.com/attachments/418226278722699275/424431785271885834/chrome_2018-03-17_00-00-00.jpg'
+					}
+				}
+			});
 			stackCountee = [];
 			stackCountee2 = [];
 		}
